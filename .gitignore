@@ -1,0 +1,14 @@
+# Node
+client/node_modules
+client/dist
+
+# Python
+server/venv
+__pycache__
+*.pyc
+
+# Env files / secrets
+*.env
+
+# OS cruft
+.DS_Store

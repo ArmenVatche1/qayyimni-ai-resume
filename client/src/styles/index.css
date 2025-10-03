@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+body {
+    @apply bg-brand-black text-gray-200;
+  }
+
+/* Sections & layout */
+.section {
+  @apply py-20 md:py-32;
+}
+.container {
+  @apply max-w-5xl mx-auto px-6;
+}
+
+/* Card styling */
+.card {
+    @apply bg-white rounded-2xl shadow-card transition-shadow duration-300;
+  }
+.card:hover {
+  @apply shadow-card-hover;
+}
+
+/* Links */
+a {
+  @apply text-brand-pink hover:text-brand-pink-dark transition;
+}
+
+/* Buttons */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-xl font-semibold transition duration-300;
+}
+.btn-primary {
+  @apply bg-brand-pink text-white hover:bg-brand-pink-dark;
+}
+.btn-secondary {
+  @apply bg-brand-yellow text-black hover:bg-brand-yellow-dark;
+}
+/* Force all sections to dark */
+section {
+    @apply bg-brand-black text-gray-200;
+  }
+  
+  /* Make all cards dark by default */
+  .card {
+    @apply bg-gray-900 text-gray-200 rounded-2xl shadow-card transition-shadow duration-300;
+  }
+  
