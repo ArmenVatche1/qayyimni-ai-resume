@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
+import API_BASE_URL from "../config";
 
 export default function UploadCard() {
   const [file, setFile] = useState(null);
@@ -22,7 +23,7 @@ export default function UploadCard() {
     setLoading(true);
 
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/feedback", {
+      const res = await fetch(`${API_BASE_URL}/api/feedback`, {
         method: "POST",
         body: fd,
       });
@@ -35,7 +36,7 @@ export default function UploadCard() {
       setLoading(false);
     }
   }
-
+  
   return (
     <section id="upload" className="section">
       <div className="container grid md:grid-cols-2 gap-10 items-start">

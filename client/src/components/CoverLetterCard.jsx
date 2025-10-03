@@ -1,5 +1,6 @@
 import { useState } from "react"
 import { motion } from "framer-motion"
+import API_BASE_URL from "../config"
 
 export default function CoverLetterCard() {
   const [file, setFile] = useState(null)
@@ -28,7 +29,7 @@ export default function CoverLetterCard() {
 
     setLoading(true)
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/coverletter", {
+      const res = await fetch(`${API_BASE_URL}/api/coverletter`, {
         method: "POST",
         body: fd,
       })
