@@ -13,7 +13,6 @@ export default function CoverLetterCard() {
     e.preventDefault()
     setError(null)
     setResult(null)
-
     if (!file) {
       setError("Please upload your resume first.")
       return
@@ -26,8 +25,8 @@ export default function CoverLetterCard() {
     const fd = new FormData()
     fd.append("file", file)
     fd.append("job", job)
-
     setLoading(true)
+
     try {
       const res = await fetch(`${API_BASE_URL}/api/coverletter`, {
         method: "POST",
@@ -47,7 +46,6 @@ export default function CoverLetterCard() {
   return (
     <section className="section">
       <div className="container grid md:grid-cols-2 gap-10 items-start">
-        {/* Upload + Job description form */}
         <motion.form
           onSubmit={handleSubmit}
           className="card p-8 space-y-6 bg-gray-800"
@@ -56,39 +54,15 @@ export default function CoverLetterCard() {
         >
           <h3 className="text-2xl font-bold">Generate a Cover Letter</h3>
           <p className="text-gray-400">Upload your resume and paste a job description</p>
-
-          <input
-            type="file"
-            accept=".pdf,.docx,.txt"
-            onChange={(e) => setFile(e.target.files?.[0])}
-            className="block w-full text-gray-200"
-          />
-
-          <textarea
-            placeholder="Paste the job description here..."
-            value={job}
-            onChange={(e) => setJob(e.target.value)}
-            rows={6}
-            className="w-full rounded-md p-3 text-gray-900"
-          />
-
-          <button
-            type="submit"
-            className="btn btn-primary w-full"
-            disabled={loading}
-          >
+          <input type="file" accept=".pdf,.docx,.txt" onChange={(e) => setFile(e.target.files?.[0])} className="block w-full text-gray-200" />
+          <textarea placeholder="Paste the job description here..." value={job} onChange={(e) => setJob(e.target.value)} rows={6} className="w-full rounded-md p-3 text-gray-900" />
+          <button type="submit" className="btn btn-primary w-full" disabled={loading}>
             {loading ? "Generating..." : "Generate Cover Letter"}
           </button>
-
           {error && <div className="text-red-500 text-sm">{error}</div>}
         </motion.form>
 
-        {/* Output card */}
-        <motion.div
-          className="card p-8 min-h-[220px] bg-gray-900"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-        >
+        <motion.div className="card p-8 min-h-[220px] bg-gray-900" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
           {loading && <p className="text-gray-400">Generating cover letter...</p>}
           {!loading && !result && <p className="text-gray-400">Your cover letter will appear here.</p>}
           {result && (

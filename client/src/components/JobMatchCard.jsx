@@ -13,7 +13,6 @@ export default function JobMatchCard() {
     e.preventDefault()
     setError(null)
     setResult(null)
-
     if (!file || !job.trim()) {
       setError("Please upload a resume and enter a job description.")
       return
@@ -22,8 +21,8 @@ export default function JobMatchCard() {
     const fd = new FormData()
     fd.append("file", file)
     fd.append("job", job)
-
     setLoading(true)
+
     try {
       const res = await fetch(`${API_BASE_URL}/api/jobmatch`, {
         method: "POST",
@@ -42,7 +41,6 @@ export default function JobMatchCard() {
   return (
     <section id="jobmatch" className="section">
       <div className="container grid md:grid-cols-2 gap-10 items-start">
-        {/* Upload + JD form */}
         <motion.form
           onSubmit={handleSubmit}
           className="card p-8 space-y-6 bg-gray-800"
@@ -50,109 +48,53 @@ export default function JobMatchCard() {
           animate={{ opacity: 1, x: 0 }}
         >
           <h3 className="text-2xl font-bold text-white">Match Resume to Job</h3>
-          <p className="text-gray-400 text-sm">
-            Upload your resume and paste the job description
-          </p>
-
-          <input
-            type="file"
-            accept=".pdf,.docx,.txt"
-            onChange={(e) => setFile(e.target.files?.[0])}
-            className="block w-full text-gray-200"
-          />
-
-          <textarea
-            placeholder="Paste job description here..."
-            value={job}
-            onChange={(e) => setJob(e.target.value)}
-            className="w-full h-32 p-3 rounded-lg border bg-gray-900 text-gray-200 border-gray-700"
-          />
-
-          <button
-            type="submit"
-            className="btn btn-primary w-full"
-            disabled={loading}
-          >
+          <p className="text-gray-400 text-sm">Upload your resume and paste the job description</p>
+          <input type="file" accept=".pdf,.docx,.txt" onChange={(e) => setFile(e.target.files?.[0])} className="block w-full text-gray-200" />
+          <textarea placeholder="Paste job description here..." value={job} onChange={(e) => setJob(e.target.value)} className="w-full h-32 p-3 rounded-lg border bg-gray-900 text-gray-200 border-gray-700" />
+          <button type="submit" className="btn btn-primary w-full" disabled={loading}>
             {loading ? "Analyzing…" : "Analyze Match"}
           </button>
-
           {error && <div className="text-red-500 text-sm">{error}</div>}
         </motion.form>
 
-        {/* Results */}
-        <motion.div
-          className="card p-8 min-h-[220px] bg-gray-900 text-gray-200"
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-        >
+        <motion.div className="card p-8 min-h-[220px] bg-gray-900 text-gray-200" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }}>
           {loading && <p className="text-gray-400">Analyzing job match…</p>}
-          {!loading && !result && (
-            <p className="text-gray-400">Your match results will appear here.</p>
-          )}
-
+          {!loading && !result && <p className="text-gray-400">Your match results will appear here.</p>}
           {result && !result.error && (
             <div className="space-y-6">
-              {/* Score */}
               <div>
                 <h4 className="text-xl font-semibold mb-2">Match Score</h4>
                 <div className="w-full bg-gray-700 rounded-full h-4">
-                  <div
-                    className="bg-brand-yellow h-4 rounded-full"
-                    style={{ width: `${result.match_score || 0}%` }}
-                  ></div>
+                  <div className="bg-brand-yellow h-4 rounded-full" style={{ width: `${result.match_score || 0}%` }}></div>
                 </div>
                 <p className="text-sm mt-2">{result.match_score || 0}%</p>
               </div>
-
-              {/* Strengths */}
               <div>
                 <h4 className="text-lg font-semibold text-green-400">Strengths</h4>
-                <ul className="list-disc pl-5 space-y-1">
-                  {result.strengths?.map((s, i) => <li key={i}>{s}</li>)}
-                </ul>
+                <ul className="list-disc pl-5 space-y-1">{result.strengths?.map((s, i) => <li key={i}>{s}</li>)}</ul>
               </div>
-
-              {/* Weaknesses */}
               <div>
                 <h4 className="text-lg font-semibold text-red-400">Weaknesses</h4>
-                <ul className="list-disc pl-5 space-y-1">
-                  {result.weaknesses?.map((w, i) => <li key={i}>{w}</li>)}
-                </ul>
+                <ul className="list-disc pl-5 space-y-1">{result.weaknesses?.map((w, i) => <li key={i}>{w}</li>)}</ul>
               </div>
-
-              {/* Missing Keywords */}
               <div>
                 <h4 className="text-lg font-semibold text-yellow-400">Missing Keywords</h4>
                 <div className="flex flex-wrap gap-2">
                   {result.missing_keywords?.map((k, i) => (
-                    <span
-                      key={i}
-                      className="text-sm bg-red-600 text-white px-3 py-1 rounded-full"
-                    >
-                      {k}
-                    </span>
+                    <span key={i} className="text-sm bg-red-600 text-white px-3 py-1 rounded-full">{k}</span>
                   ))}
                 </div>
               </div>
-
-              {/* Suggestions */}
               <div>
                 <h4 className="text-lg font-semibold">Suggestions</h4>
-                <ul className="list-disc pl-5 space-y-1">
-                  {result.suggestions?.map((s, i) => <li key={i}>{s}</li>)}
-                </ul>
+                <ul className="list-disc pl-5 space-y-1">{result.suggestions?.map((s, i) => <li key={i}>{s}</li>)}</ul>
               </div>
             </div>
           )}
-
           {result?.error && (
             <div className="text-red-500">
               <p>Error: {result.error}</p>
-              {result.raw_output && (
-                <pre className="text-xs text-gray-400 whitespace-pre-wrap">
-                  {result.raw_output}
-                </pre>
-              )}
+              {result.raw_output && <pre className="text-xs text-gray-400 whitespace-pre-wrap">{result.raw_output}</pre>}
             </div>
           )}
         </motion.div>
