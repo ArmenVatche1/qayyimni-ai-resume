@@ -1,14 +1,26 @@
-# Node
-client/node_modules
-client/dist
-
 # Python
-server/venv
-__pycache__
+__pycache__/
 *.pyc
+*.pyo
+*.pyd
+*.db
+*.sqlite3
 
-# Env files / secrets
+# Environment
+.env
+.venv/
 *.env
 
-# OS cruft
+# Node
+node_modules/
+dist/
+build/
+
+# OS
 .DS_Store
+Thumbs.db
+
+# Other
+*.pdf
+*.docx
+*.log
