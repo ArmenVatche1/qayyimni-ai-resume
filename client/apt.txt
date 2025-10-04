@@ -1,0 +1,4 @@
+tesseract-ocr
+poppler-utils
+libxml2
+libxslt1-dev
